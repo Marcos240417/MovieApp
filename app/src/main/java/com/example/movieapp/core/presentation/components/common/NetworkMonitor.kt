@@ -36,7 +36,6 @@ class NetworkMonitor(context: Context) {
 
         connectivityManager.registerNetworkCallback(request, callback)
 
-        // Limpa o listener da memória do Android caso a tela seja destruída
         awaitClose {
             connectivityManager.unregisterNetworkCallback(callback)
         }
