@@ -24,12 +24,12 @@ fun LoadingView(modifier: Modifier = Modifier) {
     ) {
         CircularProgressIndicator(
             modifier = Modifier.size(40.dp),
-            color = Color.Yellow // ✅ CORRIGIDO: Usando Color.Yellow nativo ou a variável do seu tema
+            color = Color.Yellow
         )
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF000000) // Adicionado fundo preto para simular o app
+@Preview(showBackground = true, backgroundColor = 0xFF000000) 
 @Composable
 private fun LoadingViewPreview() {
     LoadingView()
