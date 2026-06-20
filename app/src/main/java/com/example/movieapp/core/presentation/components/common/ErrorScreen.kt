@@ -23,10 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/**
- * Componente unificado para tratamento de falhas de comunicação e respostas HTTP.
- * ✅ PADRÃO SÊNIOR: Totalmente adaptável para cenários de tela cheia ou componentes reduzidos.
- */
 @Composable
 fun ErrorScreen(
     message: String,
@@ -34,32 +30,26 @@ fun ErrorScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
-        // ✅ ADICIONADO: Garante que o container ocupe o espaço proposto centralizando os eixos
         modifier = modifier
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // 1. Texto descritivo do erro enviado pela API/Paging
         Text(
             text = message,
-            maxLines = 3, // ✅ Expandido para 3 linhas para suportar mensagens de timeout completas
+            maxLines = 3, 
             overflow = TextOverflow.Ellipsis,
             fontStyle = FontStyle.Italic,
             fontSize = 16.sp,
-            // ✅ SÊNIOR: Substituído o 'white' fixo pelo padrão dinâmico do tema Material 3
             color = MaterialTheme.colorScheme.onBackground,
-            textAlign = TextAlign.Center, // ✅ Garante que o texto fique centralizado harmonicamente
+            textAlign = TextAlign.Center, 
             modifier = Modifier.fillMaxWidth()
         )
 
-        // ✅ ADICIONADO: Spacer para criar o respiro visual dinâmico entre o texto e a ação
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 2. Botão de re-tentativa reativa
         Button(
             onClick = retry,
-            // ✅ ADICIONADO: Customização de cores para bater com o visual Preto e Amarelo do seu app
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Yellow,
                 contentColor = Color.Black
@@ -72,12 +62,9 @@ fun ErrorScreen(
         }
     }
 }
-
-// --- AMBIENTE DE PREVIEW ---
 @Preview(showSystemUi = true, showBackground = true, backgroundColor = 0xFF000000)
 @Composable
 private fun ErrorScreenPreview() {
-    // Simula uma falha real de timeout na listagem de filmes
     ErrorScreen(
         message = "Unable to resolve host \"api.themoviedb.org\": No address associated with hostname",
         retry = {},
