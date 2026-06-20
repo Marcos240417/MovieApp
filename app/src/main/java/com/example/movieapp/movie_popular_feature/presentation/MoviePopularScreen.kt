@@ -19,8 +19,6 @@ import timber.log.Timber
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MoviePopularScreen(
-    // ✅ SÊNIOR: Passamos os itens de paginação já extraídos. Isso torna a Screen
-    // 100% testável e permite criar Previews com dados fakes facilmente!
     movies: LazyPagingItems<Movie>,
     navigateToDetailMovie: (movieId: Int) -> Unit,
     modifier: Modifier = Modifier
@@ -44,10 +42,7 @@ fun MoviePopularScreen(
         MovieContent(
             pagingMovies = movies,
             paddingValues = paddingValues,
-            // ✅ SÊNIOR: Em vez de abrir chaves e criar uma sub-função { id -> navigate(id) },
-            // passamos a referência direta ou executamos a ação em bloco limpo.
             onClick = { movieId ->
-                // ✅ CORRIGIDO: Printa o ID e rastreia o evento sem depender de variáveis externas de índice
                 Timber.tag("CLIQUE_FILME").d("Usuário clicou no filme com ID: $movieId")
                 navigateToDetailMovie(movieId)
             }
