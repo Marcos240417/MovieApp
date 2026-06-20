@@ -8,7 +8,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.dsl.module // ✅ Importando a DSL do Koin
+import org.koin.dsl.module 
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
