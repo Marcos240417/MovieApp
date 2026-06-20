@@ -32,28 +32,23 @@ fun BottomNavigationBar(
         BottomNavItem.MovieFavorite
     )
 
-    // Observa a pilha de telas reativamente
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    // ✅ MIGRADO: 'NavigationBar' substitui 'BottomNavigation' (Material 3)
     NavigationBar(
         modifier = modifier,
-        containerColor = Color.Black // ✅ Mantida a sua cor preta de fundo
+        containerColor = Color.Black
     ) {
         items.forEach { item ->
 
-            // ✅ CORRIGIDO: Validação sênior e type-safe se a aba está ativa
             val isSelected = currentDestination?.hierarchy?.any {
                 it.hasRoute(item.destination::class)
             } == true
 
-            // ✅ MIGRADO: 'NavigationBarItem' substitui 'BottomNavigationItem'
             NavigationBarItem(
                 selected = isSelected,
                 onClick = {
                     navController.navigate(item.destination) {
-                        // Limpa a pilha para evitar acúmulo de telas ao trocar de aba
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
@@ -70,13 +65,12 @@ fun BottomNavigationBar(
                 label = {
                     Text(text = stringResource(id = item.titleRes))
                 },
-                // ✅ MIGRADO: Configuração moderna das suas cores personalizadas no Material 3
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color.Yellow,     // Ícone amarelo quando ativo
-                    selectedTextColor = Color.Yellow,     // Texto amarelo quando ativo
-                    unselectedIconColor = Color.Gray,     // Ícone cinza quando inativo
-                    unselectedTextColor = Color.Gray,     // Texto cinza quando inativo
-                    indicatorColor = Color.DarkGray.copy(alpha = 0.3f) // Cor da "pílula" de seleção de fundo
+                    selectedIconColor = Color.Yellow,     
+                    selectedTextColor = Color.Yellow,     
+                    unselectedIconColor = Color.Gray,     
+                    unselectedTextColor = Color.Gray,    
+                    indicatorColor = Color.DarkGray.copy(alpha = 0.3f) 
                 )
             )
         }
@@ -93,8 +87,7 @@ private fun BottomNavigationBarPreview() {
             bottomBar = {
                 BottomNavigationBar(navController = fakeNavController)
             }
-        ) { innerPadding -> // 🚨 O warning nasce aqui se você não usar a variável
-            // ✅ CORRIGIDO: Criamos um Box ou Modifier aplicando o padding de segurança
+        ) { innerPadding -> 
             androidx.compose.foundation.layout.Box(
                 modifier = Modifier.padding(innerPadding)
             )
