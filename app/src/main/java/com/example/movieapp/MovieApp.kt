@@ -18,12 +18,9 @@ class MovieApp : Application() {
         }
 
         startKoin {
-            // ✅ Sênior: Adiciona o logger padrão do Koin para ajudar a debugar injeções falhas
             androidLogger()
-            // ✅ Sênior: Garante que o contexto do app esteja disponível no grafo (ex: se o Room ou DataStore precisarem de Context)
             androidContext(this@MovieApp)
 
-            // Carrega o módulo de rede do aplicativo
             modules(
                 networkModule,
                 moviePopularFeatureModule
