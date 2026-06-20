@@ -36,7 +36,6 @@ fun MovieContent(
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        // --- 1. GRADE PRINCIPAL DE FILMES POPULARES ---
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             contentPadding = paddingValues,
@@ -62,17 +61,12 @@ fun MovieContent(
                 }
             }
 
-            // --- 2. CARREGAMENTO CONTINUADO (APPEND) ---
-            // Mostra a rodinha na base buscando a próxima página de 20 filmes
             if (pagingMovies.loadState.append is LoadState.Loading) {
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     LoadingView(modifier = Modifier.fillMaxWidth())
                 }
             }
 
-            // --- 3. ERRO NA PAGINAÇÃO CONTINUADA (APPEND) ---
-            // ✅ SÊNIOR: Se a rede cair durante o scroll, mantemos os filmes na tela!
-            // Injeta apenas o botão discreto de retry na última linha da grade.
             if (pagingMovies.loadState.append is LoadState.Error) {
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Button(
@@ -91,14 +85,9 @@ fun MovieContent(
             }
         }
 
-        // --- 4. LOADING INICIAL (REFRESH) ---
-        // Rodinha no centro apenas se o banco de dados e a rede estiverem vazios na primeira abertura
         if (pagingMovies.loadState.refresh is LoadState.Loading) {
             LoadingView(modifier = Modifier.align(Alignment.Center))
         }
-
-        // --- 5. ERRO NO PRIMEIRO CARREGAMENTO (REFRESH) ---
-        // Só exibe a tela cheia de erro se falhar na largada e não houver absolutamente nada para mostrar
         if (pagingMovies.loadState.refresh is LoadState.Error) {
             val errorState = pagingMovies.loadState.refresh as LoadState.Error
             ErrorScreen(
@@ -110,8 +99,9 @@ fun MovieContent(
     }
 }
 
-        /*// --- 3. BLOQUEIO INSTANTÂNEO DE QUEDA DE SINAL ---
+        /*// ---  BLOQUEIO INSTANTÂNEO DE QUEDA DE SINAL ---
         // Se a internet cair, a ErrorScreen cobre os filmes na mesma fração de segundo!
+        //Manter apenas para usos apropriado nos App de banco e coisas parecidas.
         if (!isOnline) {
             ErrorScreen(
                 message = "Sua conexão com a internet caiu. Verifique o Wi-Fi ou dados móveis e tente novamente.",
