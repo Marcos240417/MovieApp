@@ -20,13 +20,11 @@ interface MovieService {
         @Query("page") page: Int
     ): SearchResponse
 
-    // ✅ CORRIGIDO: Adicionado as chaves "{movie_id}" para o Retrofit mapear o @Path corretamente
     @GET("movie/{movie_id}")
     suspend fun getMovie(
         @Path("movie_id") movieId: Int
     ): MovieDetailResponse
 
-    // ✅ CORRIGIDO: Padronizado o parâmetro para 'movieId' seguindo o camelCase do projeto
     @GET("movie/{movie_id}/similar")
     suspend fun getMovieSimilar(
         @Path("movie_id") movieId: Int,
