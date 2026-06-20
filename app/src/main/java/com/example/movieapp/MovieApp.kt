@@ -1,7 +1,7 @@
 package com.example.movieapp
 
 import android.app.Application
-import com.example.movieapp.core.di.networkModule // ✅ Importando o módulo refatorado
+import com.example.movieapp.core.di.networkModule 
 import com.example.movieapp.movie_popular_feature.di.moviePopularFeatureModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
