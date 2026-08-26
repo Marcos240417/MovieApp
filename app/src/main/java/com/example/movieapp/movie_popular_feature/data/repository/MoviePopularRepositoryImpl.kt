@@ -13,11 +13,10 @@ class MoviePopularRepositoryImpl(
     private val remoteDataSource: MoviePopularRemoteDataSource
 ) : MoviePopularRepository {
 
-    // ✅ CORRIGIDO: Removido o '(pagingConfig: PagingConfig)' da assinatura para bater com a interface
     override fun getPopularMovies(): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(
-                pageSize = PAGE_SIZE,          // O limite de 20 por página morre e nasce aqui dentro de forma estrita
+                pageSize = PAGE_SIZE,         
                 prefetchDistance = 5,
                 enablePlaceholders = false
             ),

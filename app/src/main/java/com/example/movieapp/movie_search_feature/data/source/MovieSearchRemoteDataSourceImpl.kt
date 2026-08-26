@@ -10,7 +10,6 @@ class MovieSearchRemoteDataSourceImpl(
 ) : MovieSearchRemoteDataSource {
 
     override fun getSearchMoviePagingSource(query: String): MovieSearchPagingSource {
-        // ✅ Instancia o motor do Paging 3 passando oDataSource e a palavra digitada (query)
         return MovieSearchPagingSource(remoteDataSource = this, query = query)
     }
 
@@ -18,7 +17,6 @@ class MovieSearchRemoteDataSourceImpl(
         page: Int,
         query: String
     ): SearchResponse {
-        // ✅ Consome diretamente o endpoint multi-search que você já tem no MovieService
         return service.searchMovies(query = query, page = page)
     }
 }

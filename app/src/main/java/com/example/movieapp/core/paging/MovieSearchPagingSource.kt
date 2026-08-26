@@ -7,10 +7,6 @@ import com.example.movieapp.movie_search_feature.domain.source.MovieSearchRemote
 import retrofit2.HttpException
 import java.io.IOException
 
-/**
- * Motor de Paginação para o fluxo de Pesquisa Multi-Busca do TMDB.
- * Passa a 'query' de forma estrita a cada nova página requisitada.
- */
 class MovieSearchPagingSource(
     private val remoteDataSource: MovieSearchRemoteDataSource,
     private val query: String
@@ -20,7 +16,6 @@ class MovieSearchPagingSource(
         return try {
             val pageNumber = params.key ?: LIMIT_PAGE_START
 
-            // Busca os dados de pesquisa filtrados pela query
             val response = remoteDataSource.getSearchMovies(page = pageNumber, query = query)
             val moviesSearch = response.results.toMovieSearch()
 
@@ -29,7 +24,6 @@ class MovieSearchPagingSource(
             LoadResult.Page(
                 data = moviesSearch,
                 prevKey = if (pageNumber == LIMIT_PAGE_START) null else pageNumber - 1,
-                // Interrompe a paginação se a lista vier vazia ou estourar o teto do servidor
                 nextKey = if (moviesSearch.isEmpty() || pageNumber >= totalPages) null else pageNumber + 1
             )
         } catch (exception: IOException) {

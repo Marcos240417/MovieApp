@@ -15,12 +15,11 @@ class MovieSearchRepositoryImpl(
     override fun getSearchMovies(query: String): Flow<PagingData<MovieSearch>> {
         return Pager(
             config = PagingConfig(
-                pageSize = PAGE_SIZE, // Padrão de 20 itens por página isolado na camada de dados
+                pageSize = PAGE_SIZE, 
                 prefetchDistance = 5,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {
-                // ✅ Encaminha a query dinâmica recebida da UI até o PagingSource
                 remoteDataSource.getSearchMoviePagingSource(query = query)
             }
         ).flow

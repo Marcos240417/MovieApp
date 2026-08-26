@@ -8,16 +8,14 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.dsl.module // ✅ Importando a DSL do Koin
+import org.koin.dsl.module 
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
 private const val TIMEOUT_SECONDS = 15L
 
-// ✅ Sênior: Módulos do Koin devem ser declarados como variáveis globais ou instâncias 'module'
-val networkModule = module {
 
-    // Singleton do Json do Kotlinx Serialization
+val networkModule = module {
     single {
         Json {
             ignoreUnknownKeys = true
@@ -26,10 +24,8 @@ val networkModule = module {
         }
     }
 
-    // Fábrica do Interceptor de Parâmetros (TMDB Key / Language)
     factory { ParamsInterceptor() }
 
-    // Fábrica do Interceptor de Logs (Apenas em Debug)
     factory {
         HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) {
@@ -40,7 +36,6 @@ val networkModule = module {
         }
     }
 
-    // Singleton do OkHttpClient (O Koin injeta o Params e o Log automaticamente via 'get()')
     single {
         OkHttpClient.Builder()
             .addInterceptor(get<ParamsInterceptor>())
@@ -50,13 +45,12 @@ val networkModule = module {
             .build()
     }
 
-    // Singleton do MovieService pronto para ser usado nos Repositories
     single<MovieService> {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .client(get()) // ✅ O get() busca o OkHttpClient configurado acima
+            .client(get()) 
             .addConverterFactory(
-                get<Json>().asConverterFactory("application/json".toMediaType()) // ✅ O get() busca o Json configurado no topo
+                get<Json>().asConverterFactory("application/json".toMediaType())
             )
             .build()
             .create(MovieService::class.java)

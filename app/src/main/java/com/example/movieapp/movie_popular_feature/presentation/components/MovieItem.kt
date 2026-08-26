@@ -22,12 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.movieapp.R // ✅ Garante o acesso aos drawables do seu projeto
+import com.example.movieapp.R 
 
-/**
- * Componente visual que renderiza o card individual de cada filme.
- * Utiliza o Coil com tratamento de imagem profissional e sobreposição da nota do filme.
- */
 @Composable
 fun MovieItem(
     voteAverage: Double,
@@ -36,28 +32,23 @@ fun MovieItem(
     onClick: (id: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // ✅ SÊNIOR: Dimensões fixadas na raiz garantem o comportamento de grade uniforme (Grid)
     Box(
         modifier = modifier
             .width(160.dp)
             .height(230.dp)
             .padding(4.dp)
-            .clickable { onClick(id) } // ✅ Área de clique expandida para todo o container
+            .clickable { onClick(id) } 
     ) {
 
-        // 1. O Card que encapsula o poster do filme
         Card(
             modifier = Modifier.fillMaxSize(),
             shape = RoundedCornerShape(8.dp),
-            // ✅ CORRIGIDO: Sintaxe oficial do Material 3 para elevação de cards
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
-            // ✅ INTEGRADO: Estrutura sênior do Coil com transição de fade e tratamento de falhas
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(imageUrl)
                     .crossfade(true)
-                    // Substitua pelos nomes exatos dos seus arquivos xml/png em res/drawable se necessário:
                     .error(R.drawable.ic_error_image)
                     .placeholder(R.drawable.ic_placeholder)
                     .build(),
@@ -65,27 +56,26 @@ fun MovieItem(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop // ✅ Preenche o card proporcionalmente sem achatar a imagem
+                contentScale = ContentScale.Crop 
             )
         }
 
-        // 2. A Tag de nota flutuante (MovieRate) posicionada por cima da imagem
         MovieRate(
             rate = voteAverage,
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .zIndex(2f) // Força o componente a ficar na camada superior
+                .zIndex(2f) 
                 .padding(start = 8.dp, bottom = 8.dp)
                 .background(
-                    color = Color.Black.copy(alpha = 0.7f), // Visual transparente premium estilo streaming
+                    color = Color.Black.copy(alpha = 0.7f), 
                     shape = RoundedCornerShape(4.dp)
                 )
-                .padding(horizontal = 6.dp, vertical = 2.dp) // Respiro interno para o texto e a estrela
+                .padding(horizontal = 6.dp, vertical = 2.dp) 
         )
     }
 }
 
-// --- AMBIENTE DE DESIGN (PREVIEW) ---
+
 @Preview(showBackground = true, backgroundColor = 0xFF000000)
 @Composable
 private fun MovieItemPreview() {

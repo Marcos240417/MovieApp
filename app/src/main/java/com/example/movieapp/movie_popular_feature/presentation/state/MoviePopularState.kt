@@ -7,7 +7,3 @@ import kotlinx.coroutines.flow.Flow
 data class MoviePopularState(
    val movies: Flow<PagingData<Movie>>
 )
-//Sua classe MoviePopularState utiliza um Flow<PagingData<Movie>> para gerenciar
-//a lista de filmes populares que serão exibidos na interface do usuário. Essa abordagem
-//permite que o seu ViewModel se conecte diretamente ao repositório que criamos,
-//facilitando a atualização automática da tela sempre que novos filmes forem carregados da API.
